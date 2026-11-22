@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# gh extension entry point: `gh extension install <owner>/gh-lastgreen`, then `gh lastgreen ...`
+set -e
+exec node "$(dirname "$0")/bin/lastgreen.js" "$@"

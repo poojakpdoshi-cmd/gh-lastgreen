@@ -1,0 +1,41 @@
+{
+  "name": "lastgreen",
+  "version": "0.1.0",
+  "description": "\"It passed yesterday — what changed?\" Diff a failing GitHub Actions run against the last green run: commits, runner image, action SHAs, toolchain & package versions, step inputs/env, and the new log lines.",
+  "type": "module",
+  "bin": {
+    "lastgreen": "bin/lastgreen.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "action.yml",
+    "gh-lastgreen",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/lastgreen.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poojakpdoshi-cmd/gh-lastgreen.git"
+  },
+  "homepage": "https://github.com/poojakpdoshi-cmd/gh-lastgreen#readme",
+  "bugs": {
+    "url": "https://github.com/poojakpdoshi-cmd/gh-lastgreen/issues"
+  },
+  "keywords": [
+    "github-actions",
+    "ci",
+    "debugging",
+    "flaky-tests",
+    "gh-extension",
+    "diff",
+    "devtools"
+  ],
+  "license": "MIT"
+}

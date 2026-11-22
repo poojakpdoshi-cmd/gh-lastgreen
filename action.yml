@@ -1,0 +1,35 @@
+name: lastgreen
+description: When a workflow fails, explain what changed since its last green run (commits, runner image, action SHAs, toolchain and package versions, new log lines).
+branding:
+  icon: git-compare
+  color: green
+inputs:
+  run-id:
+    description: The failing run to explain. Defaults to the run that triggered a `workflow_run` event.
+    default: ${{ github.event.workflow_run.id }}
+  token:
+    description: Token with `actions: read` (and `contents: read`) on this repository.
+    default: ${{ github.token }}
+  max-jobs:
+    description: How many failed jobs to analyze.
+    default: '3'
+outputs:
+  report:
+    description: Path of the generated Markdown report.
+    value: ${{ steps.explain.outputs.report }}
+runs:
+  using: composite
+  steps:
+    - id: explain
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        RUN_ID: ${{ inputs.run-id }}
+        MAX_JOBS: ${{ inputs.max-jobs }}
+        REPO: ${{ github.repository }}
+      run: |
+        report="$RUNNER_TEMP/lastgreen-report.md"
+        node "$GITHUB_ACTION_PATH/bin/lastgreen.js" "$RUN_ID" -R "$REPO" --max-jobs "$MAX_JOBS" --format md --no-cache > "$report"
+        cat "$report" >> "$GITHUB_STEP_SUMMARY"
+        cat "$report"
+        echo "report=$report" >> "$GITHUB_OUTPUT"

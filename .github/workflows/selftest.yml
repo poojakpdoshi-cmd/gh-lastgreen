@@ -1,0 +1,28 @@
+name: Self-test
+# Run this manually twice: once normally, then once with "fail" checked.
+# The "Explain failures" workflow then runs this repository's own action and
+# writes a "what changed since the last green run" report to its job summary.
+on:
+  workflow_dispatch:
+    inputs:
+      fail:
+        description: Make the demo step fail
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Demo step
+        env:
+          SIMULATE_FAILURE: ${{ inputs.fail }}
+        run: |
+          node --version
+          if [ "$SIMULATE_FAILURE" = "true" ]; then
+            echo "Error: simulated failure because SIMULATE_FAILURE=true"
+            exit 1
+          fi
+          echo "All good"

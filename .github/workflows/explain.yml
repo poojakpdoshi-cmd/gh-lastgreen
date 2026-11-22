@@ -1,0 +1,17 @@
+name: Explain failures
+# Uses this repository's own action: every failed CI or Self-test run gets a
+# "what changed since the last green run" report in this workflow's job summary.
+on:
+  workflow_run:
+    workflows: [CI, Self-test]
+    types: [completed]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  explain:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./
