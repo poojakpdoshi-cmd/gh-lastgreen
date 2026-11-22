@@ -121,3 +121,16 @@ npm test          # node:test, no dependencies
 - Logs older than the repository's retention period (90 days by default) can't be downloaded.
 
 MIT licensed.
+
+## Prior art (researched 2026-11-22)
+
+Some of this has been done before. In particular:
+
+- **thanatchon36/lastgreen** (Python) did almost the same thing in Oct 2026. Its repo, account and PyPI package now return 404.
+- **MarioACo/lastgreen** (npm) shares the name but works differently. You wrap your test command so it fingerprints every green run, then it bisects the environment. It needs setup before the failure, and it covers Node only.
+- **runner-drift** diffs runner-image software manifests ahead of time. It doesn't read failed runs.
+- **Datadog CI Visibility** (commercial) highlights log lines that are new compared with earlier successful runs.
+- **Gradle Develocity / BuildBuddy** compare two builds at the build-tool level.
+- **Copilot "Explain error"** and other LLM bots explain a single log. They don't produce a deterministic baseline diff.
+
+What this tool adds: it works **after the fact, with zero setup**, on any existing GitHub Actions run (public or private). It is deterministic, covers many ecosystems, and gives an evidence-linked report as text, Markdown or JSON.
