@@ -31,5 +31,9 @@ runs:
         report="$RUNNER_TEMP/lastgreen-report.md"
         node "$GITHUB_ACTION_PATH/bin/lastgreen.js" "$RUN_ID" -R "$REPO" --max-jobs "$MAX_JOBS" --format md --no-cache > "$report"
         cat "$report" >> "$GITHUB_STEP_SUMMARY"
+        # The report quotes untrusted log text: stop the runner from treating any of it as workflow commands.
+        stop_token="lastgreen-$(date +%s%N)-$RANDOM"
+        echo "::stop-commands::$stop_token"
         cat "$report"
+        echo "::$stop_token::"
         echo "report=$report" >> "$GITHUB_OUTPUT"
