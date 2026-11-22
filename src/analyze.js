@@ -105,8 +105,8 @@ export function analyzeJobPair({ badJob, goodJob, badLog, goodLog, maxLines = 30
   }
 
   // structural step differences (added / removed steps → workflow edits)
-  const badStepNames = (badJob?.steps || []).map((s) => s.name);
-  const goodStepNames = (goodJob?.steps || []).map((s) => s.name);
+  const badStepNames = (badJob?.steps || []).map((s) => s.name).filter((n) => !/^Post /.test(n));
+  const goodStepNames = (goodJob?.steps || []).map((s) => s.name).filter((n) => !/^Post /.test(n));
   const stepsAdded = goodJob ? badStepNames.filter((n) => !goodStepNames.includes(n)) : [];
   const stepsRemoved = goodJob ? goodStepNames.filter((n) => !badStepNames.includes(n)) : [];
 
