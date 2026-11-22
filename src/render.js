@@ -74,7 +74,7 @@ export function renderText(r, { style: s, width = 100 } = {}) {
 
   if (r.good) {
     line(s.bold('What changed between the two runs'));
-    const label = (t) => `  ${t.padEnd(13)}`;
+    const label = (t) => `  ${t.padEnd(14)}`;
     if (r.sameCommit) {
       line(`${label('Code')}${s.green('nothing')} ${s.dim(`— both runs built ${short(r.bad.sha)}`)}`);
     } else if (r.code) {
